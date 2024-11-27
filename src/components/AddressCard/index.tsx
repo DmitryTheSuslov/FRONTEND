@@ -18,7 +18,7 @@ const AddressCard = ({ address, isMock }: AddressCardProps) => {
             <CardBody className="d-flex flex-column justify-content-between">
                 <CardTitle tag="h5" className="card-title-custom"> {address.address_name} </CardTitle>
                 <CardText className="card-text-custom"> Площадь: {address.area} </CardText>
-                <Link to={`/classrooms/${address.address_id}`}>
+                <Link to={`/addresses/${address.address_id}`}>
                     <Button className="button-custom">
                     Подробнее
                     </Button>

@@ -48,8 +48,8 @@ const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock, addressName
 
     return (
         <Container className="container-custom">
-            <Row className="justify-content-center mb-5"> {/* Центрируем ряд */}
-                <Col xs="12" md="8" lg="6"> {/* Центрируем содержимое и ограничиваем ширину */}
+            <Row className="justify-content-center mb-5"> 
+                <Col xs="12" md="8" lg="6"> 
                     <Form onSubmit={handleSubmit} className="d-flex">
                         <Input
                             value={addressName}

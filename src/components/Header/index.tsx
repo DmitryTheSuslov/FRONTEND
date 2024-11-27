@@ -17,7 +17,7 @@ const Header = () => {
                         <Col md="6" className="d-flex justify-content-end align-items-center">
                             <Nav className="fs-5 gap-3" navbar>
                                 <NavItem className="nav-item-custom">
-                                    <NavLink tag={RRNavLink} to="/classrooms" className="nav-link-custom">
+                                    <NavLink tag={RRNavLink} to="/addresses" className="nav-link-custom">
                                         Адреса
                                     </NavLink>
                                 </NavItem>

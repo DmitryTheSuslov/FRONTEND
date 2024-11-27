@@ -2,7 +2,7 @@
 import {Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Link, useLocation} from "react-router-dom";
 import {T_Address} from "modules/types.ts";
-import {isHomePage, isClassroomPage} from "utils/utils.ts";
+import {isHomePage, isAddressPage} from "utils/utils.ts";
 
 interface BreadcrumbsProps {
     currentAddress: T_Address | null
@@ -21,14 +21,14 @@ const Breadcrumbs = ({ currentAddress }: BreadcrumbsProps) => {
 					</Link>
 				</BreadcrumbItem>
 			}
-			{location.pathname.includes("/classrooms") &&
+			{location.pathname.includes("/addresses") &&
                 <BreadcrumbItem active>
-                    <Link to="/classrooms">
-						Аудитории
+                    <Link to="/addresses">
+						Адреса
                     </Link>
                 </BreadcrumbItem>
 			}
-            {isClassroomPage(location.pathname) &&
+            {isAddressPage(location.pathname) &&
                 <BreadcrumbItem active>
                     <Link to={location.pathname}>
                         { currentAddress?.address_name }

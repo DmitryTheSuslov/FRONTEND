@@ -25,8 +25,8 @@ function App() {
                 <Row>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-                        <Route path="/classrooms/" element={<AddressesPage addresses={addresses} setAddresses={setAddresses} isMock={isMock} setIsMock={setIsMock} addressName={AddressName} setAddressName={setAddressName}/>} />
-                        <Route path="/classrooms/:id" element={<AddressPage selectedAddress={currentAddress} setSelectedAddress={setSelectedAddress} isMock={isMock} setIsMock={setIsMock}/>} />
+                        <Route path="/addresses/" element={<AddressesPage addresses={addresses} setAddresses={setAddresses} isMock={isMock} setIsMock={setIsMock} addressName={AddressName} setAddressName={setAddressName}/>} />
+                        <Route path="/addresses/:id" element={<AddressPage selectedAddress={currentAddress} setSelectedAddress={setSelectedAddress} isMock={isMock} setIsMock={setIsMock}/>} />
                     </Routes>
                 </Row>
             </Container>
