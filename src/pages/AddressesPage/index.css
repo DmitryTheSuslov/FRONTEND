@@ -1,0 +1,33 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+.container-custom {
+    padding: 20px;
+    background-color: #0074a8;
+}
+
+.form-row {
+    margin-bottom: 30px;
+}
+
+.search-input {
+    font-family: "Montserrat", sans-serif;
+    padding: 10px;
+    font-size: 1.1rem;
+    border-radius: 10px !important;
+    height: 40px !important;
+    width: 80% !important;
+}
+
+
+.classroom-card-col {
+    margin-bottom: 30px;
+}
+
+.search-button {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px !important;
+    height: 40px !important;
+    width: 20% !important;
+}
