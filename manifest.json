@@ -1,0 +1,19 @@
+{
+    "name": "Water counters",
+    "short_name": "Water counters",
+    "start_url": "/WATER-COUNTERS/",
+    "display": "standalone",
+    "background_color": "#fdfdfd",
+    "theme_color": "#db4938",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "/WATER-COUNTERS/logo.png",
+        "type": "image/png", "sizes": "192x192"
+      },
+      {
+        "src": "/WATER-COUNTERS/logo.png",
+        "type": "image/png", "sizes": "512x512"
+      }
+    ]
+  }
