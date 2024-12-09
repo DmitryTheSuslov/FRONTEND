@@ -1,12 +1,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
 .container-custom {
-    padding: 20px;
+    padding: 10px;
     background-color: #0074a8;
 }
 
-.form-row {
-    margin-bottom: 30px;
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+    gap: 5px;
+    justify-content: center;
+    align-items: stretch;
 }
 
 .search-input {
@@ -19,8 +23,9 @@
 }
 
 
-.classroom-card-col {
-    margin-bottom: 30px;
+.address-card-col {
+    display: flex;
+    justify-content: center;
 }
 
 .search-button {
@@ -30,4 +35,21 @@
     border-radius: 10px !important;
     height: 40px !important;
     width: 20% !important;
+}
+
+@media (max-width: 768px) {
+    .search-input {
+        font-size: 14px;
+    }
+
+    .search-button {
+        font-size: 14px;
+    }
+}
+
+/* Отступы для мобильных устройств */
+@media (max-width: 576px) {
+    .container-custom {
+        padding: 0 10px;
+    }
 }

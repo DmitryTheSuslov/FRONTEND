@@ -1,6 +1,7 @@
 import { CardImg, CardTitle, CardText, Card, CardBody } from "reactstrap";
 // import { useState } from "react";
 import './index.css'; // Импортируем стили
+import main from "assets/main.jpg"
 // const items = [
 //     {
 //         src: "http://127.0.0.1:9000/images/mai.jpg", // Замените URL на актуальный
@@ -20,7 +21,7 @@ import './index.css'; // Импортируем стили
 // ];
 
 const item = {
-    src: "http://127.0.0.1:9000/images/main.jpg", // Замените URL на актуальный
+    src: main, // Замените URL на актуальный
     altText: "Первый технический университет в России",
     caption: "Прообраз современного вуза, основан при Екатерине II"
 }

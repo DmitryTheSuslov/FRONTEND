@@ -63,9 +63,9 @@ const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock, addressName
                     </Form>
                 </Col>
             </Row>
-            <Row xs={4} md={4}>
+            <Row className="card-grid">
                 {addresses?.map((address) => (
-                    <Col key={address.address_id} md="auto" className="classroom-card-col">
+                    <Col key={address.address_id} md="auto" className="address-card-col">
                         <AddressCard address={address} isMock={isMock} />
                     </Col>
                 ))}
