@@ -2,7 +2,10 @@ import { Button, Col, Container, Form, Input, Row } from "reactstrap";
 import { T_Address } from "src/modules/types.ts";
 import AddressCard from "components/AddressCard";
 import { AddressMocks } from "src/modules/mocks.ts";
+import { useSelector, useDispatch } from "react-redux";
+import { setAddressName } from "src/searchSlice";
 import { FormEvent, useEffect } from "react";
+import { RootState } from "src/store";
 import * as React from "react";
 import './index.css'; // Импортируем стили
 
@@ -15,8 +18,9 @@ type AddressesPageProps = {
     setAddressName: React.Dispatch<React.SetStateAction<string>>
 }
 
-const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock, addressName, setAddressName }: AddressesPageProps) => {
-
+const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock}: AddressesPageProps) => {
+    const addressName = useSelector((state: RootState) => state.search.addressName); // Получаем состояние из Redux
+    const dispatch = useDispatch();
     const fetchData = async () => {
         try {
             const response = await fetch(`/api/addresses/search?name=${addressName}`, { signal: AbortSignal.timeout(1000) });
@@ -53,7 +57,7 @@ const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock, addressName
                     <Form onSubmit={handleSubmit} className="d-flex">
                         <Input
                             value={addressName}
-                            onChange={(e) => setAddressName(e.target.value)}
+                            onChange={(e) => dispatch(setAddressName(e.target.value))}
                             placeholder="Поиск..."
                             className="me-2 search-input"
                         />

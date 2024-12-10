@@ -1,14 +1,14 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import {BrowserRouter} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css'; // Импортируем Provider
-// import { store } from './store'; // Импортируем ваш store
+import { store } from './store'; // Импортируем ваш store
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    // <Provider store={store}> {/* Оборачиваем Provider */}
+    <Provider store={store}> {/* Оборачиваем Provider */}
       <BrowserRouter
         future={{
           v7_startTransition: true,
