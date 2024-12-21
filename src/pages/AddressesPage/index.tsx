@@ -5,7 +5,8 @@ import { AddressMocks } from "src/modules/mocks.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { setAddressName } from "src/searchSlice";
 import { FormEvent, useEffect } from "react";
-import { RootState } from "src/store";
+import { RootState, AppDispatch } from "src/store";
+import { fetchAddresses } from "src/thunks/addressesThunk";
 import * as React from "react";
 import './index.css'; // Импортируем стили
 
@@ -18,37 +19,19 @@ type AddressesPageProps = {
     setAddressName: React.Dispatch<React.SetStateAction<string>>
 }
 
-const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock}: AddressesPageProps) => {
-    const addressName = useSelector((state: RootState) => state.search.addressName); // Получаем состояние из Redux
-    const dispatch = useDispatch();
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`/api/addresses/search?name=${addressName}`, { signal: AbortSignal.timeout(1000) });
-            const data = await response.json();
-            setAddresses(data.addresses);
-            setIsMock(false);
-        } catch {
-            createMocks();
-        }
-    }
+const AddressesPage: React.FC = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const addressName = useSelector((state: RootState) => state.search.addressName);
+    const { addresses, loading, error } = useSelector((state: RootState) => state.addresses_count);
 
-    const createMocks = () => {
-        setIsMock(true);
-        setAddresses(AddressMocks.filter(address => address.address_name.toLowerCase().includes(addressName.toLowerCase())));
-    }
-
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        if (isMock) {
-            createMocks();
-        } else {
-            await fetchData();
-        }
-    }
+        dispatch(fetchAddresses(addressName)); // Вызываем Thunk
+      };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+      useEffect(() => {
+        dispatch(fetchAddresses("")); // Загружаем все аудитории при монтировании
+      }, [dispatch]);
 
     return (
         <Container className="container-custom">
@@ -70,7 +53,7 @@ const AddressesPage = ({ addresses, setAddresses, isMock, setIsMock}: AddressesP
             <Row className="card-grid">
                 {addresses?.map((address) => (
                     <Col key={address.address_id} md="auto" className="address-card-col">
-                        <AddressCard address={address} isMock={isMock} />
+                        <AddressCard address={address} isMock={false} />
                     </Col>
                 ))}
             </Row>

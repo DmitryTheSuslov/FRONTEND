@@ -41,3 +41,16 @@
     border: #000000;
     border-radius: 15px !important;
 }
+
+.add-to-cart-button {
+   font-family: "Montserrat", sans-serif;
+    background-color: #007bff !important; /* Синий фон */
+    border: none; /* Без рамки */
+    padding: 10px 20px; /* Отступы */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 15px !important; /* Закругленные углы */
+    margin-top: 10px !important; /* Отступ сверху */
+    text-align: center; /* Выравнивание текста по центру */
+}
+  
