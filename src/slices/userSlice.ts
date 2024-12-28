@@ -10,11 +10,13 @@ interface UserState {
     // Дополнительные поля, которые есть в UserSerializer
   } | null;
   isAuthenticated: boolean;
+  name: string
 }
 
 const initialState: UserState = {
   user: null,
   isAuthenticated: false,
+  name: ''
 };
 
 const userSlice = createSlice({
@@ -25,12 +27,16 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
     },
+    setName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload;
+    },
     logoutUser: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.name = '';
     },
   },
 });
 
-export const { setUser, logoutUser } = userSlice.actions;
+export const { setUser, logoutUser, setName } = userSlice.actions;
 export default userSlice.reducer;

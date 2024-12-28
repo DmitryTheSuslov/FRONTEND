@@ -17,7 +17,6 @@ interface AddressCardProps {
 const AddressCard = ({ address, isMock }: AddressCardProps) => {
     const sessionId = useSelector((state: any) => state.cookie.cookie); // Получаем session_id из Redux
     const currentCartCount = useSelector((state: any) => state.addresses_count.addressesCount);
-    // console.log(currentCartCount);
     const currentCartItems = useSelector((state: any) => state.addresses_count.cartItems); // Текущее состояние корзины
     const dispatch = useDispatch();
     const [error, setError] = useState<string | null>(null);
@@ -45,17 +44,17 @@ const AddressCard = ({ address, isMock }: AddressCardProps) => {
                     area: address.area,
                     photo: address.photo
                 };
-                dispatch(setCartItems([...currentCartItems, newCartItem]));
+                // dispatch(setCartItems([...currentCartItems, newCartItem]));
                 // setSuccessMessage(currentCartItems);
                 console.log(currentCartItems);
-                setSuccessMessage("Аудитория успешно добавлена в корзину.");
+                setSuccessMessage("Адрес успешно добавлен в корзину.");
             } else {
-                setError("Ошибка при добавлении аудитории в корзину.");
+                setError("Ошибка при добавлении адреса в корзину.");
                 setSuccessMessage(null);
             }
         } catch (err) {
-            console.error("Ошибка при добавлении аудитории:", err);
-            setError("Ошибка при добавлении аудитории в корзину.");
+            console.error("Ошибка при добавлении адреса:", err);
+            setError("Ошибка при добавлении адреса в корзину.");
             setSuccessMessage(null);
         }
     };

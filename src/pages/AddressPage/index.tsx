@@ -3,8 +3,11 @@ import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {T_Address} from "src/modules/types.ts";
 import {Col, Container, Row} from "reactstrap";
+import { useDispatch } from "react-redux";
 import {AddressMocks} from "src/modules/mocks.ts";
 import mockImage from "assets/mock.png";
+import { fetchAddressById } from "src/thunks/addressThunk";
+import { AppDispatch } from "src/store";
 import './index.css';
 
 type AddressPageProps = {
@@ -16,31 +19,26 @@ type AddressPageProps = {
 
 const AddressPage = ({selectedAddress, setSelectedAddress, isMock, setIsMock}: AddressPageProps) => {
     const { id } = useParams<{id: string}>();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`/api/addresses/${id}`,{ signal: AbortSignal.timeout(1000) })
-            const data = await response.json()
-            setSelectedAddress(data)
-        } catch {
-            createMock()
-        }
-    }
+    useEffect(() => {
+        const loadAddress = async () => {
+          if (id) {
+            const result = await dispatch(fetchAddressById(id));
+            if (fetchAddressById.fulfilled.match(result)) {
+              setSelectedAddress(result.payload);
+            }
+          }
+        };
+    
+        loadAddress();
+        return () => setSelectedAddress(null);
+      }, [id, dispatch, setSelectedAddress]);
 
     const createMock = () => {
         setIsMock(true)
         setSelectedAddress(AddressMocks.find(Address => Address?.address_id == parseInt(id as string)) as T_Address)
     }
-
-    useEffect(() => {
-        if (!isMock) {
-            fetchData()
-        } else {
-            createMock()
-        }
-
-        return () => setSelectedAddress(null)
-    }, []);
 
     if (!selectedAddress) {
         return (

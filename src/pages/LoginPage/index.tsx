@@ -4,6 +4,7 @@ import { api } from "src/api";
 import { useDispatch } from "react-redux";
 import { setCookie } from "src/slices/cookieSlice";
 import { useNavigate } from "react-router-dom";
+import { setName } from "src/slices/userSlice";
 export const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
@@ -29,7 +30,8 @@ export const LoginPage: FC = () => {
         if (mess.includes("200")) {
           console.log("Login successful");
           const username = formData.username;
-          localStorage.setItem("username", username);
+          dispatch(setName(username));
+          // localStorage.setItem("username", username);
   
           const cookies = document.cookie.split(";").find((row) => row.startsWith("session_id="));
           if (!cookies){

@@ -1,8 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table } from "reactstrap";
+import { Container, Table, Row, Col } from "reactstrap";
 import { api } from "src/api"; 
+import FixCard from "components/FixCard";
 import { parseISO, format } from "date-fns"; 
 import "./index.css";
+
+
+function formatDate(dateString) {
+  if (!dateString) {
+      return '-'; // Возвращаем прочерк для нулевой или пустой строки
+  }
+
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+
 
 interface Event {
   id: number;
@@ -11,6 +28,8 @@ interface Event {
   submitted_at: string;
   completed_at: string | null;
   addresses: Array<any>; 
+  paydate: string;
+  fixation_id: number
 }
 
 const EventsPage: React.FC = () => {
@@ -41,7 +60,7 @@ const EventsPage: React.FC = () => {
   useEffect(() => {
     fetchEvents();
   }, []);
-
+  console.log(events)
   return (
     <Container>
       <h1 className="events-title">Фиксации</h1>
@@ -50,47 +69,28 @@ const EventsPage: React.FC = () => {
       {error && <div className="error-message">{error}</div>}
 
       {!loading && events.length > 0 && (
-        <Table bordered>
-          <thead>
-            <tr>
-              <th>№</th>
-              <th>Статус</th>
-              <th>Дата создания</th>
-              <th>Дата формирования</th>
-              <th>Дата завершения</th>
-              <th>Количество адресов</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event, index) => (
-              <tr key={event.id}>
-                <td>{index + 1}</td>
-                <td>{event.status}</td>
-                <td>
-                  {event.created_at
-                    ? format(parseISO(event.created_at), "dd.MM.yyyy HH:mm:ss")
-                    : "-"}
-                </td>
-                <td>
-                  {event.submitted_at
-                    ? format(parseISO(event.submitted_at), "dd.MM.yyyy HH:mm:ss")
-                    : "-"}
-                </td>
-                <td>
-                  {event.completed_at
-                    ? format(parseISO(event.completed_at), "dd.MM.yyyy HH:mm:ss")
-                    : "-"}
-                </td>
-                <td>{event.addresses.length}</td> {/* Используем длину массива classrooms */}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <Row>
+        {events.map((item, index) => (
+          <Col key={item.id} xs="12" className="mb-3">
+            <FixCard
+              id={index + 1}
+              created_at={formatDate(item.created_at)}
+              submitted_at={formatDate(item.submitted_at)}
+              completed_at={formatDate(item.completed_at)}
+              pay_date={formatDate(item.paydate)}
+              addresses_count={item.addresses.length}
+              status={item.status}
+              true_id={item.fixation_id}
+            />
+          </Col>
+        ))}
+      </Row>
       )}
 
       {!loading && events.length === 0 && <p>Мероприятий не найдено.</p>}
     </Container>
   );
+
 };
 
 export default EventsPage;

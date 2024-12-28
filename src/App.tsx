@@ -8,6 +8,7 @@ import EditUserPage from "./pages/AccountPage/index1";
 import EditProfile from "./pages/AccountPage";
 import EventsPage from "./pages/FixationsPage";
 import CartPage from "./pages/CartPage";
+import CartPage2 from "./pages/CartPage2";
 import { Route, Routes } from "react-router-dom";
 import RegisterPage from "pages/RegistrationPage";
 import { T_Address } from "src/modules/types.ts";
@@ -75,8 +76,11 @@ function App() {
                                 element={< EventsPage />} 
                             />
                         <Route 
-                                path="/draft_fixation" 
-                                element={< CartPage />} 
+                                path="/draft_fixation/:draftId" 
+                                element={< CartPage2 />} 
+
+                                // path="/draft_fixation/" 
+                                // element={< CartPage />} 
                             />
                     </Routes>
                 </Row>

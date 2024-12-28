@@ -5,6 +5,8 @@ import { AddressMocks } from "src/modules/mocks.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { setAddressName } from "src/searchSlice";
 import { FormEvent, useEffect } from "react";
+import { useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RootState, AppDispatch } from "src/store";
 import { fetchAddresses } from "src/thunks/addressesThunk";
 import * as React from "react";
@@ -20,18 +22,22 @@ type AddressesPageProps = {
 }
 
 const AddressesPage: React.FC = () => {
+    const {fix} = useParams<{ fix: string }>();
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const currentCartCount = useSelector((state: any) => state.addresses_count.addressesCount);
     const addressName = useSelector((state: RootState) => state.search.addressName);
-    const { addresses, loading, error } = useSelector((state: RootState) => state.addresses_count);
-
+    const { addresses, loading, error, draftId } = useSelector((state: RootState) => state.addresses_count);
+    const sessionId = useSelector((state: any) => state.cookie.cookie);
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        console.log(addressName);
         dispatch(fetchAddresses(addressName)); // Вызываем Thunk
       };
 
-      useEffect(() => {
+    useEffect(() => {
         dispatch(fetchAddresses("")); // Загружаем все аудитории при монтировании
-      }, [dispatch]);
+    }, [dispatch]);
 
     return (
         <Container className="container-custom">
@@ -47,6 +53,16 @@ const AddressesPage: React.FC = () => {
                         <Button color="primary" className="search-button">
                             Поиск
                         </Button>
+                        {sessionId && (
+                            <Button
+                                color="primary"
+                                className="search-button"
+                                onClick={() => navigate(`/draft_fixation/${draftId}`)}
+                                disabled={currentCartCount === 0} // Отключаем кнопку, если количество 0
+                            >
+                                Корзина: {currentCartCount !== null ? currentCartCount : 0}
+                            </Button>
+                        )}
                     </Form>
                 </Col>
             </Row>

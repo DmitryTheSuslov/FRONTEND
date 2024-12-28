@@ -36,13 +36,6 @@ const Breadcrumbs = ({ currentAddress }: BreadcrumbsProps) => {
                 </BreadcrumbItem>
             }
 			<BreadcrumbItem />
-            {isAddressPage(location.pathname) &&
-                <BreadcrumbItem active>
-                    <Link to={location.pathname}>
-                        { currentAddress?.address_name }
-                    </Link>
-                </BreadcrumbItem>
-            }
             {isMyFixationsPage(location.pathname) &&
                 <BreadcrumbItem active>
                     <Link to={location.pathname}>

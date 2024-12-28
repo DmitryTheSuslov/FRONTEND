@@ -12,9 +12,11 @@ interface CartState {
   addressesCount: number;
   draftId: string | null;
   cartItems: CartAddress[];
-  addresses: CartAddress[]; // Список всех аудиторий
+  status: number;
+  addresses: CartAddress[]; 
   loading: boolean;
   error: string | null;
+  month: number;
 }
 
 const initialState: CartState = {
@@ -22,8 +24,10 @@ const initialState: CartState = {
   draftId: null,
   cartItems: [],
   addresses: [],
+  month: 0,
   loading: false,
   error: null,
+  status: 0
 };
 
 const cartSlice = createSlice({
@@ -33,16 +37,28 @@ const cartSlice = createSlice({
     setCartCount: (state, action: PayloadAction<number>) => {
       state.addressesCount = action.payload;
     },
+    decCartCount: (state, action: PayloadAction<number>) => {
+      state.addressesCount = state.addressesCount - 1;
+    },
     resetCartCount: (state) => {
       state.addressesCount = 0;
       state.draftId = null;
       state.cartItems = [];
+      state.status = 0;
+      state.month = 0;
     },
     setDraftId: (state, action: PayloadAction<string>) => {
       state.draftId = action.payload;
     },
+    setMonth: (state, action: PayloadAction<number>) => {
+      state.month = action.payload;
+    },
+    setStatus: (state, action: PayloadAction<number>) => {
+      state.status = action.payload;
+    },
     setCartItems: (state, action: PayloadAction<CartAddress[]>) => {
-      state.cartItems = action.payload;
+      state.cartItems = action.payload
+      state.addressesCount = state.cartItems.length;
     },
     removeCartItem(state, action: PayloadAction<number>) {
       state.cartItems = state.cartItems.filter(
@@ -67,7 +83,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setCartCount, resetCartCount, setDraftId, setCartItems, removeCartItem } =
+export const { setCartCount, resetCartCount, setDraftId, setCartItems, removeCartItem, decCartCount, setStatus, setMonth } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

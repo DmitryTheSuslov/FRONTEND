@@ -5,15 +5,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "src/store";
 import { resetCartCount } from "src/slices/cartSlice"; // Actions
 import { useNavigate } from "react-router-dom";
-import { deleteCart, submitOrder } from "src/thunks/cartThunks";
+import { deleteCart, submitOrder, fetchCartAddresses, fetchCartFixation } from "src/thunks/cartThunks";
 import "./index.css";
 
 const CartPage: React.FC = () => {
-  const cartItems = useSelector((state: RootState) => state.addresses_count.cartItems);
   const fixationId = useSelector((state: RootState) => state.addresses_count.draftId);
   const dispatch = useDispatch<any>(); // Типизируем Dispatch для Thunk
   const navigate = useNavigate();
+  const [fixDetails, setFixDetails] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const cartItems = useSelector((state: RootState) => state.addresses_count.cartItems);
 
   const handleDeleteFromCart = (addressId: number) => {
     // dispatch(deleteClassroomFromCart({ eventId: Number(eventId), classroomId }))
@@ -53,10 +54,11 @@ const CartPage: React.FC = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchCartFixation("57"));
     if (cartItems.length === 0) {
       navigate("/addresses");
     }
-  }, [cartItems, navigate]);
+  }, [navigate]);
 
   return (
     <Container className="cart-page-container">

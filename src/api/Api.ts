@@ -354,11 +354,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/addresses/search/
      * @secure
      */
-    addressesSearchList: (params: RequestParams = {}) =>
+    addressesSearchList: (query?: { name?: string }, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/addresses/search/`,
         method: "GET",
         secure: true,
+        query,
         ...params,
       }),
 

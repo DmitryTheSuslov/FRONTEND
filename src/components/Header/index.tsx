@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { delCookie } from "src/slices/cookieSlice";
+import { resetCartCount } from "src/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { Button, Nav, Navbar, NavItem, NavLink } from "reactstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
@@ -14,11 +15,12 @@ const Header: React.FC = () => {
 
   // Извлекаем данные из Redux Store
   const { cookie } = useSelector((state: RootState) => state.cookie); // Состояние cookie
-  const { user, isAuthenticated } = useSelector((state: RootState) => state.user); // Данные о пользователе
+  const { user, isAuthenticated, name } = useSelector((state: RootState) => state.user); // Данные о пользователе
   const classroomsCount = useSelector((state: RootState) => state.addresses_count.addressesCount);
 
   const handleLogout = () => {
     dispatch(delCookie());
+    dispatch(resetCartCount());
     navigate("/login");
   };
 
@@ -42,12 +44,7 @@ const Header: React.FC = () => {
             </NavItem>
             <NavItem className="nav-item-custom">
               <NavLink tag={RRNavLink} to="/profile" className="nav-link-custom">
-                {user?.username || "пользователь"}
-              </NavLink>
-            </NavItem>
-            <NavItem className="nav-item-custom">
-              <NavLink tag={RRNavLink} to="/draft_fixation" className="nav-link-custom">
-                Корзина ({classroomsCount})
+                {name || "пользователь"}
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-custom">

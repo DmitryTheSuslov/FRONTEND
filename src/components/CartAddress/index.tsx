@@ -10,7 +10,8 @@ interface CartAddressCardProps {
   address_name: string;
   area: string;
   photoUrl?: string; // URL фотографии
-  onDelete: (addressId: number) => void; // Проп для удаления
+  onDelete: (addressId: number) => void;
+  status: number; // Проп для удаления
 }
 
 const CartAddressCard = ({
@@ -20,6 +21,7 @@ const CartAddressCard = ({
   area,
   photoUrl,
   onDelete,
+  status
 }: CartAddressCardProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -37,12 +39,13 @@ const CartAddressCard = ({
       <CardBody className="cart-card-body d-flex align-items-center">
         {photoUrl && <img src={photoUrl} alt={name} className="cart-card-image" />}
         <div className="cart-card-content">
-          <CardTitle tag="h5">{name}</CardTitle>
+          <CardTitle tag="h5">Площадь: {area}м^2</CardTitle>
           <CardText>{address_name}</CardText>
         </div>
+        {status === 1 &&(
         <Button color="danger" onClick={handleDelete}>
           Удалить
-        </Button>
+        </Button>)}
       </CardBody>
     </Card>
   );
