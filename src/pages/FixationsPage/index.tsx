@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Row, Col } from "reactstrap";
 import { api } from "src/api"; 
+import { useSelector, useDispatch } from "react-redux";
 import FixCard from "components/FixCard";
+import { RootState, AppDispatch } from "src/store";
 import { parseISO, format } from "date-fns"; 
 import "./index.css";
 
@@ -19,8 +21,6 @@ function formatDate(dateString) {
   return `${year}-${month}-${day}`;
 }
 
-
-
 interface Event {
   id: number;
   status: string;
@@ -28,14 +28,17 @@ interface Event {
   submitted_at: string;
   completed_at: string | null;
   addresses: Array<any>; 
-  paydate: string;
-  fixation_id: number
+  pay_date: string;
+  fixation_id: number;
+  owner: string;
+  month: number;
 }
 
 const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]); 
   const [loading, setLoading] = useState<boolean>(false); 
   const [error, setError] = useState<string | null>(null); 
+  // const username = useSelector((state: any) => state.user.name);
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -70,15 +73,14 @@ const EventsPage: React.FC = () => {
 
       {!loading && events.length > 0 && (
         <Row>
-        {events.map((item, index) => (
+        {events.filter(item => item.status != '5').map((item, index) => (
           <Col key={item.id} xs="12" className="mb-3">
             <FixCard
               id={index + 1}
-              created_at={formatDate(item.created_at)}
-              submitted_at={formatDate(item.submitted_at)}
-              completed_at={formatDate(item.completed_at)}
-              pay_date={formatDate(item.paydate)}
-              addresses_count={item.addresses.length}
+              user={item.owner}
+              created_at={formatDate(item.submitted_at)}
+              month={item.month}
+              pay_date={item.pay_date}
               status={item.status}
               true_id={item.fixation_id}
             />
@@ -87,7 +89,7 @@ const EventsPage: React.FC = () => {
       </Row>
       )}
 
-      {!loading && events.length === 0 && <p>Мероприятий не найдено.</p>}
+      {!loading && events.length === 0 && <p>Фиксаций не найдено.</p>}
     </Container>
   );
 

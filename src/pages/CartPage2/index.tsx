@@ -9,7 +9,7 @@ import { T_Address } from "src/modules/types.ts";
 
 import { resetCartCount, setMonth, setStatus } from "src/slices/cartSlice"; // Actions
 import { useNavigate } from "react-router-dom";
-import { deleteCart, submitOrder, fetchCartAddresses, fetchCartFixation } from "src/thunks/cartThunks";
+import { deleteCart, submitOrder, fetchCartAddresses, fetchCartFixation, updateMonth } from "src/thunks/cartThunks";
 import "./index.css";
 
 const CartPage2: React.FC = () => {
@@ -60,16 +60,20 @@ const CartPage2: React.FC = () => {
     if (cartItems.length == 0){
       navigate("/addresses");
     }
+    if (month === undefined || month === null){
+      // navigate("/addresses");
+    }
     else{
-    dispatch(submitOrder({ fixationId: Number(draftId) }))
-      .unwrap()
-      .then(() => {
-        alert("Ваш заказ успешно оформлен!");
-        navigate("/addresses");
-      })
-      .catch((err) => {
-        setError(err);
-      });}
+      dispatch(submitOrder({ fixationId: Number(draftId) }))
+        .unwrap()
+        .then(() => {
+          // alert("Ваш заказ успешно оформлен!");
+          dispatch(updateMonth({fixationId: Number(draftId), month: month}))
+          navigate("/addresses");
+        })
+        .catch((err) => {
+          setError(err);
+        });}
   };
 
   const handleDeleteCart = () => {
@@ -82,6 +86,15 @@ const CartPage2: React.FC = () => {
         setError(err);
       });
   };
+
+  const changeMonth = () => {
+    console.log("here");
+    dispatch(updateMonth({fixationId: Number(draftId), month: month}))
+  };
+
+  // const handleChangeMonth = () => {
+
+  // }
 
   useEffect(() => {
     console.log("cart");
@@ -132,15 +145,36 @@ const CartPage2: React.FC = () => {
         <Col xs="2">
           <span style={{ fontWeight: "bold" }}>Фиксация №{draftId}</span>
         </Col>
-        <Col xs="2">
+        {/* <Col xs="2">
           <span>Месяц:</span>
           <Input
             type="text"
-            value={fixMonth}
+            value={months[month]}
             onChange={(e) => setFixMonth(e.target.value)}
             style={{ display: "inline-block", width: "100%" }}
             disabled={status !== 1}
           />
+        </Col> */}
+        <Col xs="2">
+          <div>
+              <label htmlFor="dropdown">Выберите месяц:</label>
+              <select id="dropdown" value={months[month]} onChange={(e) => dispatch(setMonth(monthNumbers[e.target.value]))}
+              style={{ display: "inline-block", width: "100%" }} disabled={status !== 1}>
+                  <option value=""></option>
+                  <option value="Январь">Январь</option>
+                  <option value="Февраль">Февраль</option>
+                  <option value="Март">Март</option>
+                  <option value="Апрель">Апрель</option>
+                  <option value="Май">Май</option>
+                  <option value="Июнь">Июнь</option>
+                  <option value="Июль">Июль</option>
+                  <option value="Август">Август</option>
+                  <option value="Сентябрь">Сентябрь</option>
+                  <option value="Октябрь">Октябрь</option>
+                  <option value="Ноябрь">Ноябрь</option>
+                  <option value="Декабрь">Декабрь</option>
+              </select>
+          </div>
         </Col>
       </Row>
 
@@ -148,10 +182,13 @@ const CartPage2: React.FC = () => {
         <Row className="mb-3">
           <Col className="d-flex justify-content-start gap-3">
             <Button color="primary" onClick={handleSubmitOrder}>
-              Сохранить
+              Отправить на рассмотрение
             </Button>
             <Button color="danger" onClick={handleDeleteCart}>
               Удалить
+            </Button>
+            <Button color="primary" onClick={changeMonth}>
+              Сохранить
             </Button>
           </Col>
         </Row>

@@ -13,28 +13,28 @@ interface UserInfo {
 }
 
 const EditUserPage: FC = () => {
-  const { userId } = useParams();
+  // const { userId } = useParams();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [formData, setFormData] = useState<UserInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Загрузка данных пользователя по userId
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await api.user.userWhoamiList(userId); // Передаем userId в запрос
-        setUserInfo(response.data);
-        setFormData(response.data);
-      } catch (err) {
-        console.error("Ошибка загрузки данных пользователя", err);
-        setError("Не удалось загрузить данные пользователя");
-      }
-    };
-    if (userId) {
-      getUser(); // Запускаем загрузку, только если есть userId
-    }
-  }, [userId]); // Перезапускать эффект при изменении userId
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const response = await api.user.userWhoamiList(userId); // Передаем userId в запрос
+  //       setUserInfo(response.data);
+  //       setFormData(response.data);
+  //     } catch (err) {
+  //       console.error("Ошибка загрузки данных пользователя", err);
+  //       setError("Не удалось загрузить данные пользователя");
+  //     }
+  //   };
+  //   if (userId) {
+  //     getUser(); // Запускаем загрузку, только если есть userId
+  //   }
+  // }, [userId]); // Перезапускать эффект при изменении userId
 
   // Обработчик изменений данных в форме
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ const EditUserPage: FC = () => {
       {error && <div className="error-message">{error}</div>}
 
       {/* Форма редактирования */}
-      {userInfo ? (
+      {true ? (
         <form onSubmit={handleSubmit} className="edit-form">
           <div className="form-group">
             <label htmlFor="username">Никнейм:</label>

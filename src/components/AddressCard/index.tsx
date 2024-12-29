@@ -8,6 +8,11 @@ import { useState } from "react";
 import './index.css';
 import { setCartCount, setDraftId, setCartItems } from "slices/cartSlice";
 
+function getLastElement(str) {
+    const parts = str.split('/');
+    return parts[parts.length - 1];
+}
+
 
 interface AddressCardProps {
     address: T_Address,
@@ -34,7 +39,7 @@ const AddressCard = ({ address, isMock }: AddressCardProps) => {
 
             if (response.status === 200) {
                 setError(null);
-                dispatch(setCartCount(currentCartCount + 1));
+                dispatch(setCartCount(response.data.addresses_count));
                 const draftId = response.data.fixation_id;
                 dispatch(setDraftId(draftId));
 
@@ -58,11 +63,11 @@ const AddressCard = ({ address, isMock }: AddressCardProps) => {
             setSuccessMessage(null);
         }
     };
-
     return (
         <Card className="card-custom">
             <div className="card-img-wrapper">
                 <CardImg src={isMock ? mockImage as string : address.photo} className="card-img-custom"/>
+                {/* <CardImg src={isMock ? mockImage as string : "http://172.20.10.3:9000/images/" + getLastElement(address.photo)} className="card-img-custom"/> */}
             </div>
             <CardBody className="d-flex flex-column justify-content-between">
                 <CardTitle tag="h5" className="card-title-custom"> {address.address_name} </CardTitle>

@@ -16,7 +16,7 @@ interface CartState {
   addresses: CartAddress[]; 
   loading: boolean;
   error: string | null;
-  month: number;
+  month: number | null;
 }
 
 const initialState: CartState = {
@@ -24,7 +24,7 @@ const initialState: CartState = {
   draftId: null,
   cartItems: [],
   addresses: [],
-  month: 0,
+  month: null,
   loading: false,
   error: null,
   status: 0
@@ -52,6 +52,7 @@ const cartSlice = createSlice({
     },
     setMonth: (state, action: PayloadAction<number>) => {
       state.month = action.payload;
+      console.log(state.month)
     },
     setStatus: (state, action: PayloadAction<number>) => {
       state.status = action.payload;

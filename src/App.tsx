@@ -65,12 +65,8 @@ function App() {
                             />
                          <Route 
                                 path="/profile" 
-                                element={<EditProfile />} 
+                                element={<EditUserPage />} 
                             />
-                        <Route 
-                            path="/users/:userId/edit" 
-                            element={<EditUserPage />} 
-                        />
                         <Route 
                                 path="/my_fixations" 
                                 element={< EventsPage />} 

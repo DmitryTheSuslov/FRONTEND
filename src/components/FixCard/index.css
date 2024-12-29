@@ -1,8 +1,8 @@
 .cart-card {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 16px;
+    /* overflow: hidden; */
+    /* margin-bottom: 16px; */
   }
   
   .cart-card-body {
@@ -22,6 +22,10 @@
   .cart-card-content {
     flex: 1; /* Занять оставшееся пространство */
   }
+
+  .cart-card-id {
+    flex: 0.2; /* Занять оставшееся пространство */
+  }
   
   .cart-card-title {
     font-size: 1.2rem;
@@ -30,7 +34,7 @@
   
   .cart-card-text {
     color: #555;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
   
   .cart-delete-button {

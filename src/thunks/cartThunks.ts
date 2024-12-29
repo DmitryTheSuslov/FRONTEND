@@ -53,6 +53,21 @@ export const deleteAddressFromCart = createAsyncThunk<
   }
 });
 
+export const updateMonth = createAsyncThunk<
+  void,
+  {fixationId: number; month: number },
+  { rejectValue: string }
+>("cart/updateMonth", async ({fixationId, month}, { dispatch, rejectWithValue }) => {
+  try {
+    console.log("update");
+    console.log("month");
+    const response = await api.fixations.fixationsUpdateUpdate(String(fixationId), {"month": month});
+    console.log(response);
+  } catch (err) {
+    return rejectWithValue("Ошибка при обновлении месяца");
+  }
+});
+
 // Thunk для удаления всей корзины
 export const deleteCart = createAsyncThunk<
   void,
