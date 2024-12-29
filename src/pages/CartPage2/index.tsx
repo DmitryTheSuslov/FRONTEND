@@ -182,7 +182,7 @@ const CartPage2: React.FC = () => {
         <Row className="mb-3">
           <Col className="d-flex justify-content-start gap-3">
             <Button color="primary" onClick={handleSubmitOrder}>
-              Отправить на рассмотрение
+              Сформировать
             </Button>
             <Button color="danger" onClick={handleDeleteCart}>
               Удалить
