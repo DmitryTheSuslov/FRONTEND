@@ -9,8 +9,8 @@ export const fetchAddressById = createAsyncThunk<T_Address, string, { rejectValu
       const response = await api.addresses.addressesRead(id);
       return response.data as T_Address;
     } catch (error) {
-      console.error("Ошибка при получении данных аудитории:", error);
-      return rejectWithValue("Не удалось загрузить данные аудитории.");
+      console.error("Ошибка при получении данных адресов:", error);
+      return rejectWithValue("Не удалось загрузить данные адресов.");
     }
   }
 );

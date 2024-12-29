@@ -33,7 +33,6 @@ const monthNumbers = {
   "Декабрь": 11
 };
 
-// Thunk для удаления аудитории из корзины
 export const deleteAddressFromCart = createAsyncThunk<
   void,
   { fixationId: number; addressId: number },
@@ -46,10 +45,10 @@ export const deleteAddressFromCart = createAsyncThunk<
       dispatch(removeCartItem(addressId));
       dispatch(decCartCount(-1)); // Уменьшаем счетчик
     } else {
-      return rejectWithValue("Ошибка при удалении аудитории из корзины.");
+      return rejectWithValue("Ошибка при удалении адреса из корзины.");
     }
   } catch (err) {
-    return rejectWithValue("Ошибка при удалении аудитории из корзины.");
+    return rejectWithValue("Ошибка при удалении адреса из корзины.");
   }
 });
 
@@ -68,7 +67,7 @@ export const updateMonth = createAsyncThunk<
   }
 });
 
-// Thunk для удаления всей корзины
+
 export const deleteCart = createAsyncThunk<
   void,
   { fixationId: number },
@@ -78,7 +77,7 @@ export const deleteCart = createAsyncThunk<
     const response = await api.fixations.fixationsDeleteDelete(String(fixationId));
 
     if (response.status === 200) {
-      dispatch(resetCartCount()); // Сбрасываем состояние корзины
+      dispatch(resetCartCount()); 
     } else {
       return rejectWithValue("Ошибка при удалении корзины.");
     }
@@ -95,7 +94,7 @@ export const submitOrder = createAsyncThunk<
 >("cart/submitOrder", async ({ fixationId }, {dispatch, rejectWithValue }) => {
   try {
     const response = await api.fixations.fixationsUpdateStatusUserUpdate(String(fixationId), {});
-
+    
     if (response.status !== 200) {
       return rejectWithValue("Ошибка при оформлении заказа.");
     }
@@ -129,8 +128,8 @@ export const fetchCartAddresses = createAsyncThunk(
 
       return data2.status;
     } catch (error) {
-      console.error("Ошибка при загрузке аудиторий:", error);
-      return rejectWithValue("Не удалось загрузить данные аудиторий");
+      console.error("Ошибка при загрузке адресов:", error);
+      return rejectWithValue("Не удалось загрузить данные адресов");
     }
   }
 );
@@ -155,8 +154,8 @@ export const fetchCartFixation = createAsyncThunk(
       await dispatch(setStatus(data.status));
       return '';
     } catch (error) {
-      console.error("Ошибка при загрузке аудиторий:", error);
-      return rejectWithValue("Не удалось загрузить данные аудиторий");
+      console.error("Ошибка при загрузке адресов:", error);
+      return rejectWithValue("Не удалось загрузить данные адресов");
     }
   }
 );
