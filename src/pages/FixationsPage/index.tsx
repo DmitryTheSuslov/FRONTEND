@@ -73,7 +73,7 @@ const EventsPage: React.FC = () => {
 
       {!loading && events.length > 0 && (
         <Row>
-        {events.filter(item => item.status != '5').map((item, index) => (
+        {events.filter(item => item.status != '5' && item.status != '1').map((item, index) => (
           <Col key={item.id} xs="12" className="mb-3">
             <FixCard
               id={index + 1}
